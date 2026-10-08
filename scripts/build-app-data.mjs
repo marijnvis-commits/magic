@@ -42,7 +42,7 @@ for (const [id, p] of Object.entries(latest.prices)) {
   }
   cards.push({
     id, name: m.name, set: m.set, no: m.total ? `${m.no}/${String(m.total).padStart(3, "0")}` : m.no,
-    rarity: m.rarity, now, avg30,
+    rarity: m.rarity, now, avg30, cmId: m.cmId ?? null,
     was,
     hist: spanSnaps.map((s) => s.prices?.[id]?.[0] ?? null),
   });
