@@ -51,7 +51,7 @@ async function main() {
   // 2. Per kaart details + Cardmarket-prijs ophalen.
   const meta = {};
   const prices = {};
-  let i = 0, missingPrice = 0;
+  let i = 0, missingPrice = 0, loggedSample = false;
   async function worker() {
     while (i < listed.length) {
       const { id } = listed[i++];
@@ -69,6 +69,8 @@ async function main() {
         image: card.image ?? null,
       };
       const cm = card.pricing?.cardmarket;
+      if (cm && !loggedSample) { loggedSample = true; console.log("Voorbeeld Cardmarket-velden:", JSON.stringify(cm)); }
+      if (cm?.idProduct) meta[card.id].cmId = cm.idProduct;
       const trend = pick(cm, "trend");
       if (trend == null) { missingPrice++; continue; }
       prices[card.id] = [trend, pick(cm, "avg30"), pick(cm, "low"), pick(cm, "avg7")];
